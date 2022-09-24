@@ -47,28 +47,25 @@ class UserServiceImplTest {
 
     @Test
     void getUser() {
-        UserResponse userResponse = userService.getUser("testemail@test.test");
-        assertNotNull(userResponse);
+        assertNotNull(userService.getUser("testemail@test.test"));
     }
 
     @Test
     void deleteUser() {
         UserResponse userResponse = userService.getUser("testemail@test.test");
         userService.deleteUser(userResponse.id());
+        assertEquals(Collections.emptyList(),userService.getAllUsers());
     }
 
     @Test
     void updateUser() {
         userService.updateUser(new UserRequest("testemail@test.test","updatedFirstName"));
-        UserResponse userResponse = userService.getUser("testemail@test.test");
-        assertEquals("updatedFirstName", userResponse.firstName());
+        assertEquals("updatedFirstName", userService.getUser("testemail@test.test").firstName());
     }
 
     @Test
     void login() {
-       UserResponse userResponse =
-               userService.login(new LoginRequest("testemail@test.test","TestPassword123#"));
-       assertNotNull(userResponse);
+       assertNotNull(userService.login(new LoginRequest("testemail@test.test","TestPassword123#")));
     }
 
     @Test
