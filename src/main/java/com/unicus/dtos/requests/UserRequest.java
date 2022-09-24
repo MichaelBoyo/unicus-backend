@@ -8,5 +8,8 @@ UserRequest(String firstName, String lastName,
             Integer day, String month,
             Integer year, String aboutMe,
             String imageUrl) {
+    public UserRequest(String email,String firstName){
+        this(firstName,null,email,null,null,null,null,null,null,null,null);
+    }
 
 }
