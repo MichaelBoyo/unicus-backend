@@ -19,7 +19,13 @@ public class User {
     private String email;
     private String password;
     private String phoneNumber;
+    private Integer day;
+    private String month;
+    private Integer year;
+    private String aboutMe;
+    private String imageUrl;
     private Set<Roles> roles;
+    private String motto;
 
     public void addRole(Roles role) {
         if (roles == null) roles = new HashSet<>();
@@ -27,7 +33,7 @@ public class User {
     }
 
     public UserResponse toUserResponse() {
-        return new UserResponse(id,firstName, lastName, email,phoneNumber,roles);
+        return new UserResponse(id,firstName, lastName, email,phoneNumber,roles,day,month,year,aboutMe,imageUrl);
     }
 
 
