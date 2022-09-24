@@ -18,4 +18,5 @@ public interface UserService {
     List<UserResponse> getAllUsers();
 
 
+    void deleteAll();
 }

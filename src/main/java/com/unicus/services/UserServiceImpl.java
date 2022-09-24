@@ -35,9 +35,10 @@ public class UserServiceImpl implements UserService {
 
         validateEmail(request);
         validatePassword(request);
-        if(request.phoneNumber()!= null) {
+        if (request.phoneNumber() != null) {
             validatePhoneNumber(request);
-            if(userRepository.existsByPhoneNumber(request.phoneNumber())) throw new UnicusException("phone number used");
+            if (userRepository.existsByPhoneNumber(request.phoneNumber()))
+                throw new UnicusException("phone number used");
         }
         User user = User.builder()
                 .firstName(request.firstName())
@@ -52,7 +53,7 @@ public class UserServiceImpl implements UserService {
                 .aboutMe(request.aboutMe())
                 .imageUrl(request.imageUrl())
                 .build();
-        log.info("user -> {}",user);
+        log.info("user -> {}", user);
         userRepository.save(user);
         return new Response(OK, "user registered successfully");
     }
@@ -71,20 +72,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response updateUser(UserRequest request) {
         User user = userRepository.findUserByEmail(request.email());
-        mapRequestToUser(request,user);
-        if(request.password() != null) user.setPassword(passwordEncoder.encode(request.password()));
+        mapRequestToUser(request, user);
+        if (request.password() != null) user.setPassword(passwordEncoder.encode(request.password()));
 
         userRepository.save(user);
         return new Response(OK, "User updated successfully");
     }
 
     @Override
-    public UserResponse login(LoginRequest loginRequest)  {
+    public UserResponse login(LoginRequest loginRequest) {
         return userRepository.findUserByEmail(loginRequest.email()).toUserResponse();
     }
 
     @Override
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll().stream().map(User::toUserResponse).toList();
+    }
+
+    @Override
+    public void deleteAll() {
+        userRepository.deleteAll();
     }
 }
